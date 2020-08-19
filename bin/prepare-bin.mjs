@@ -1,4 +1,6 @@
 import { init } from '../lib/commons.mjs'
+import fs from 'fs'
+import path from 'path'
 import axios from 'axios'
 import url from 'url'
 
@@ -30,7 +32,7 @@ async function main() {
         let nextUrl = url.parse(result.data._links.next.href)
 
         if (nextUrl?.query?.trim() !== '') {
-            let countTmp = nextUrl.query.trim().split('=')[0]
+            let countTmp = nextUrl.query.trim().split('=')[1]
 
             countTmp = parseInt(countTmp)
 
@@ -38,9 +40,25 @@ async function main() {
                 recordsPerPage = countTmp
         }
 
+        let totalPages = Math.ceil(count / recordsPerPage);
+
         console.info(`Identificados ${count} registro(s) a obter`)
         console.info(`Próxima Url: ${nextUrl.query}`)
         console.info(`Registros por página: ${recordsPerPage}`)
+
+        function* gen() {
+            let current = 0;
+            while (current < totalPages)
+                yield current++
+        }
+
+        for (let i of gen()) {
+            let filePath = path.join(options.queuePath, `page-${i}`)
+            let fh = fs.openSync(filePath, 'w')
+            fs.closeSync(fh)
+        }
+
+        process.exit(0)
     } catch (error) {
         console.error(`Falha ao obter dados da url: ${error}`)
     }
