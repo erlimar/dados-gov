@@ -1,0 +1,17 @@
+{
+  "name": "dados-gov",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prepare": "node  ./bin/prepare-bin.mjs",
+    "process-queue": "node  ./bin/process-queue-bin.mjs",
+    "gc": "node  ./bin/gc-bin.mjs",
+    "merge-csv": "node  ./bin/merge-csv-bin.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
