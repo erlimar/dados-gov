@@ -43,7 +43,7 @@ async function main() {
         let totalPages = Math.ceil(count / recordsPerPage);
 
         console.info(`Identificados ${count} registro(s) a obter`)
-        console.info(`Próxima Url: ${nextUrl.query}`)
+        console.info(`Próxima Url: ${nextUrl}`)
         console.info(`Registros por página: ${recordsPerPage}`)
 
         function* gen() {
