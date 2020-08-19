@@ -52,12 +52,17 @@ async function main() {
                 yield current++
         }
 
+        console.info('Gravando fila...')
         for (let i of gen()) {
             let filePath = path.join(options.queuePath, `page-${i}`)
+
+            // TODO: Melhorar criação do arquivo vazio
+            // TODO: Imprimir que está gerando arquivos
             let fh = fs.openSync(filePath, 'w')
             fs.closeSync(fh)
         }
 
+        console.info(`Index gravado com ${totalPages} itens!`)
         process.exit(0)
     } catch (error) {
         console.error(`Falha ao obter dados da url: ${error}`)
